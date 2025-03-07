@@ -1,81 +1,33 @@
 # DG-DETR
-[![Paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2404.01604)
 
 ## Network Architecture
 <img src = "./figs/architecture.png"> 
 
 ## Installation
 ```
-conda create -n WaveDH python=3.10  # create a virtual env
-conda activate WaveDH               # activate the env
-conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
+conda create -n DG-DETR python=3.10  # create a virtual env
 pip install -r requirements.txt     # install other needed packages
 ```
 
 ## Datasets Preparation
-RESIDE official website [here](https://sites.google.com/view/reside-dehaze-datasets/reside-v0). We use the same data structure as [Dehazeformer](https://github.com/IDKiro/DehazeFormer). Please refer to their repository to prepare datasets.
-
-Finally, you should get the following dataset structure:
-```
-── data
-    ├─ RESIDE-IN
-    │   ├─ train
-    │   │   ├─ GT
-    │   │   │   └─ ... (image filename)
-    │   │   └─ hazy
-    │   │       └─ ... (corresponds to the former)
-    │   └─ test
-    │       └─ ...
-    └─ RESIDE-OUT
-        ├─ train
-        │   ├─ GT
-        │   │   └─ ... (image filename)
-        │   └─ hazy
-        │       └─ ... (corresponds to the former)
-        └─ test
-            └─ ...
-```
 
 ## Test
 
 Run the following script to test the trained model:
 
 ```sh
-python test.py --data_dir (path to dataset)--dataset (dataset name) --exp (exp name)
-```
-
-For example, we test the WaveDH on the SOTS indoor set:
-
-```sh
-python test.py --data_dir ./data --dataset RESIDE-IN --exp indoor
+tools/train.py -c configs/rtdetr/rtdetr_r50vd_6x_coco.yml -r path/to/checkpoint --test-only
 ```
 
 ## Performance
-  - The benchmark results of our models can be downloaded from [WaveDH](https://gisto365-my.sharepoint.com/:f:/g/personal/sm_hwang_gm_gist_ac_kr/EqjCvWt-Sg5KhhTcxCPHLj8BXrj7piY13YUN3NJIw5MmEg?e=Ed2VhZ) and [WaveDH-tiny](https://gisto365-my.sharepoint.com/:f:/g/personal/sm_hwang_gm_gist_ac_kr/EvcqhOPBG4lHgXDTKWk2nXsBS_rixBAhkY_74mwU1C0VEg?e=R9pFUc).
-  - Performance in PSNR/SSIM on SOTS-indoor and SOTS-outdoor.
-  
-  | Model         | SOTS-indoor  | SOTS-outdoor |
-  | ------------- |:------------:|:------------:|
-  | WaveDH        | 39.35/0.995  | 34.89/0.984 |
-  | WaveDH-Tiny   | 36.93/0.992  | 34.52/0.983 |
 
 ## TODO list
 - [x] Add instructions
-- [x] Add test code
-- [x] Add checkpoint files
+- [ ] Add test code
+- [ ] Add checkpoint files
 - [ ] Add training code
 
 ## Citation
-If you find this work useful in your research, please consider citing:
-
-```
-@article{hwang2024wavedh,
-  title={WaveDH: Wavelet Sub-bands Guided ConvNet for Efficient Image Dehazing},
-  author={Seongmin Hwang and Daeyoung Han and Cheolkon Jung and Moongu Jeon}, 
-  journal={arXiv preprint arXiv:2404.01604},
-  year={2024}
-}
-```
 
 ## Acknowledgement
-Thanks to Yuda Song et al for releasing their official implementation of the [Dehazeformer](https://ieeexplore.ieee.org/document/10076399/) paper. Our code is heavily borrowed from the implementation.
+Thanks to Yuda Song et al for releasing their official implementation of the [RT-DETR](https://openaccess.thecvf.com/content/CVPR2024/html/Zhao_DETRs_Beat_YOLOs_on_Real-time_Object_Detection_CVPR_2024_paper.html) paper. Our code is heavily borrowed from the implementation.
