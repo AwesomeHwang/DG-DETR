@@ -9,7 +9,7 @@ conda create -n DG-DETR python=3.10  # create a virtual env
 pip install -r requirements.txt     # install other needed packages
 ```
 
-## Datasets Preparation
+## Dataset Preparation
 
 ## Test
 
